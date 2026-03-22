@@ -255,7 +255,7 @@ export function validateDefinition(parsed: unknown): { valid: boolean; errors: s
       }
 
       // 4. Cycle detection (DFS) — only when no duplicate IDs
-      if (!idCounts.values().some((c: number) => c > 1)) {
+      if (![...idCounts.values()].some((c: number) => c > 1)) {
         // Build adjacency list: step → its dependencies
         const adj = new Map<string, string[]>();
         for (const step of steps) {

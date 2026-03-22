@@ -6,20 +6,20 @@
  * auto-mode behavior behind the engine-polymorphic interface.
  */
 
-import type { WorkflowEngine } from "./workflow-engine.ts";
+import type { WorkflowEngine } from "./workflow-engine.js";
 import type {
   EngineState,
   EngineDispatchAction,
   CompletedStep,
   ReconcileResult,
   DisplayMetadata,
-} from "./engine-types.ts";
-import type { GSDState } from "./types.ts";
-import type { DispatchAction, DispatchContext } from "./auto-dispatch.ts";
+} from "./engine-types.js";
+import type { GSDState } from "./types.js";
+import type { DispatchAction, DispatchContext } from "./auto-dispatch.js";
 
-import { deriveState } from "./state.ts";
-import { resolveDispatch } from "./auto-dispatch.ts";
-import { loadEffectiveGSDPreferences } from "./preferences.ts";
+import { deriveState } from "./state.js";
+import { resolveDispatch } from "./auto-dispatch.js";
+import { loadEffectiveGSDPreferences } from "./preferences.js";
 
 // ─── Bridge: DispatchAction → EngineDispatchAction ────────────────────────
 
@@ -75,7 +75,8 @@ export class DevWorkflowEngine implements WorkflowEngine {
     const gsd = state.raw as GSDState;
     const mid = gsd.activeMilestone?.id ?? "";
     const midTitle = gsd.activeMilestone?.title ?? "";
-    const prefs = loadEffectiveGSDPreferences() ?? undefined;
+    const loaded = loadEffectiveGSDPreferences();
+    const prefs = loaded?.preferences ?? undefined;
 
     const dispatchCtx: DispatchContext = {
       basePath: context.basePath,

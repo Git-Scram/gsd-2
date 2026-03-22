@@ -16,7 +16,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { parse } from "yaml";
-import type { WorkflowDefinition, StepDefinition } from "./definition-loader.ts";
+import type { WorkflowDefinition, StepDefinition } from "./definition-loader.js";
 
 /** Maximum characters per artifact to prevent context window blowout. */
 const MAX_CONTEXT_CHARS = 10_000;

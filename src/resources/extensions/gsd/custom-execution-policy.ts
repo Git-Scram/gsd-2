@@ -11,9 +11,9 @@
  * - recover() returns retry — simple default recovery strategy.
  */
 
-import type { ExecutionPolicy } from "./execution-policy.ts";
-import type { RecoveryAction, CloseoutResult } from "./engine-types.ts";
-import { runCustomVerification } from "./custom-verification.ts";
+import type { ExecutionPolicy } from "./execution-policy.js";
+import type { RecoveryAction, CloseoutResult } from "./engine-types.js";
+import { runCustomVerification } from "./custom-verification.js";
 
 export class CustomExecutionPolicy implements ExecutionPolicy {
   private readonly runDir: string;

@@ -16,10 +16,10 @@
 import { mkdirSync, writeFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { stringify } from "yaml";
-import { loadDefinition, substituteParams } from "./definition-loader.ts";
-import { initializeGraph, writeGraph, readGraph } from "./graph.ts";
-import type { WorkflowDefinition } from "./definition-loader.ts";
-import type { WorkflowGraph } from "./graph.ts";
+import { loadDefinition, substituteParams } from "./definition-loader.js";
+import { initializeGraph, writeGraph, readGraph } from "./graph.js";
+import type { WorkflowDefinition } from "./definition-loader.js";
+import type { WorkflowGraph } from "./graph.js";
 
 // ─── Types ───────────────────────────────────────────────────────────────
 

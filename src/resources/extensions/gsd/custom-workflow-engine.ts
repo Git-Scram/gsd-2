@@ -12,14 +12,14 @@
  * - Phase transitions are derivable from GRAPH.yaml step statuses.
  */
 
-import type { WorkflowEngine } from "./workflow-engine.ts";
+import type { WorkflowEngine } from "./workflow-engine.js";
 import type {
   EngineState,
   EngineDispatchAction,
   CompletedStep,
   ReconcileResult,
   DisplayMetadata,
-} from "./engine-types.ts";
+} from "./engine-types.js";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { parse } from "yaml";
@@ -30,9 +30,9 @@ import {
   markStepComplete,
   expandIteration,
   type WorkflowGraph,
-} from "./graph.ts";
-import { injectContext } from "./context-injector.ts";
-import type { WorkflowDefinition, StepDefinition } from "./definition-loader.ts";
+} from "./graph.js";
+import { injectContext } from "./context-injector.js";
+import type { WorkflowDefinition, StepDefinition } from "./definition-loader.js";
 
 export class CustomWorkflowEngine implements WorkflowEngine {
   readonly engineId = "custom";

@@ -21,7 +21,7 @@ import { readFileSync, existsSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { parse } from "yaml";
-import type { WorkflowDefinition, StepDefinition, VerifyPolicy } from "./definition-loader.ts";
+import type { WorkflowDefinition, StepDefinition, VerifyPolicy } from "./definition-loader.js";
 
 /** Verification outcome type — matches ExecutionPolicy.verify() return type. */
 export type VerificationOutcome = "continue" | "retry" | "pause";

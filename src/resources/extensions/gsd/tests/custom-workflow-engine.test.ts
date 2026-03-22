@@ -300,25 +300,25 @@ describe("CustomWorkflowEngine.getDisplayMetadata", () => {
 
 describe("CustomExecutionPolicy", () => {
   it("verify returns continue", async () => {
-    const policy = new CustomExecutionPolicy();
+    const policy = new CustomExecutionPolicy("/tmp/run");
     const result = await policy.verify("custom-step", "wf/step-1", { basePath: "/tmp" });
     assert.equal(result, "continue");
   });
 
   it("selectModel returns null", async () => {
-    const policy = new CustomExecutionPolicy();
+    const policy = new CustomExecutionPolicy("/tmp/run");
     const result = await policy.selectModel("custom-step", "wf/step-1", { basePath: "/tmp" });
     assert.equal(result, null);
   });
 
   it("recover returns retry", async () => {
-    const policy = new CustomExecutionPolicy();
+    const policy = new CustomExecutionPolicy("/tmp/run");
     const result = await policy.recover("custom-step", "wf/step-1", { basePath: "/tmp" });
     assert.deepStrictEqual(result, { outcome: "retry", reason: "Default retry" });
   });
 
   it("closeout returns no artifacts", async () => {
-    const policy = new CustomExecutionPolicy();
+    const policy = new CustomExecutionPolicy("/tmp/run");
     const result = await policy.closeout("custom-step", "wf/step-1", {
       basePath: "/tmp",
       startedAt: Date.now(),
@@ -327,7 +327,7 @@ describe("CustomExecutionPolicy", () => {
   });
 
   it("prepareWorkspace resolves without error", async () => {
-    const policy = new CustomExecutionPolicy();
+    const policy = new CustomExecutionPolicy("/tmp/run");
     await policy.prepareWorkspace("/tmp", "M001"); // Should not throw
   });
 });
