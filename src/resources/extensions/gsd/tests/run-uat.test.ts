@@ -265,14 +265,13 @@ test('(l) dispatch preconditions via resolveSliceFile', () => {
         'resolveSliceFile(..., "UAT") returns non-null when UAT file exists (dispatch trigger state)',
       );
 
-      const uatResultFilePath = resolveSliceFile(base, 'M001', 'S01', 'UAT');
-      assert.deepStrictEqual(
-        uatResultFilePath,
-        null,
-        'resolveSliceFile(..., "UAT") returns null when result file missing (dispatch trigger state)',
+      // UAT spec without a verdict line means UAT has not been run yet
+      const rawContent = readFileSync(uatFilePath!, 'utf-8');
+      assert.ok(
+        !/verdict:\s*[\w-]+/i.test(rawContent),
+        'UAT file without verdict indicates UAT has not been run (dispatch trigger state)',
       );
 
-      const rawContent = readFileSync(uatFilePath!, 'utf-8');
       assert.deepStrictEqual(
         extractUatType(rawContent),
         'artifact-driven',
@@ -286,13 +285,18 @@ test('(l) dispatch preconditions via resolveSliceFile', () => {
 test('test block at line 307', () => {
     const base = createFixtureBase();
     try {
-      writeSliceFile(base, 'M001', 'S01', 'UAT', makeUatContent('artifact-driven'));
+      // Write UAT file with a verdict — simulates completed UAT
       writeSliceFile(base, 'M001', 'S01', 'UAT', '# UAT Result\n\nverdict: PASS\n');
 
-      const uatResultFilePath = resolveSliceFile(base, 'M001', 'S01', 'UAT');
+      const uatFilePath = resolveSliceFile(base, 'M001', 'S01', 'UAT');
       assert.ok(
-        uatResultFilePath !== null,
-        'resolveSliceFile(..., "UAT") returns non-null when result file exists (idempotent skip state)',
+        uatFilePath !== null,
+        'resolveSliceFile(..., "UAT") returns non-null when UAT file exists',
+      );
+      const content = readFileSync(uatFilePath!, 'utf-8');
+      assert.ok(
+        /verdict:\s*[\w-]+/i.test(content),
+        'UAT file with verdict indicates UAT has been completed (idempotent skip state)',
       );
     } finally {
       cleanup(base);
